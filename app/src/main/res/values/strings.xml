@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">CatsList</string>
-    <string name="tab_text_1">Tab 1</string>
-    <string name="tab_text_2">Tab 2</string>
+    <string name="tab_text_1">All</string>
+    <string name="tab_text_2">Favorites</string>
+
+    <string name="loading_label">Cats are coming!</string>
 </resources>
