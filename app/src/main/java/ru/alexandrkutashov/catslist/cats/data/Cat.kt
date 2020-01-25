@@ -11,5 +11,10 @@ data class Cat(
     val name: String,
     val origin: String,
     @SerializedName("wikipedia_url")
-    val infoUrl: String
+    val infoUrl: String?,
+    val imageUrl: String?
+)
+
+data class CatImage(
+    val url: String
 )

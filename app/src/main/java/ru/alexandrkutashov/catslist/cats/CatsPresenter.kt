@@ -2,10 +2,9 @@ package ru.alexandrkutashov.catslist.cats
 
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
 import moxy.InjectViewState
 import moxy.MvpPresenter
-import ru.alexandrkutashov.catslist.cats.data.CatsApi
+import ru.alexandrkutashov.catslist.cats.data.CatsRepository
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -17,7 +16,7 @@ import javax.inject.Inject
 private const val PAGE_SIZE = 20
 
 @InjectViewState
-class CatsPresenter @Inject constructor(private val catsApi: CatsApi) : MvpPresenter<CatsView>() {
+class CatsPresenter @Inject constructor(private val catsRepository: CatsRepository) : MvpPresenter<CatsView>() {
 
     private var pageCount = -1
     private val disposable = CompositeDisposable()
@@ -32,8 +31,7 @@ class CatsPresenter @Inject constructor(private val catsApi: CatsApi) : MvpPrese
     fun onLoadMore() {
         viewState.showLoading(true)
         disposable.add(
-            catsApi.breeds(++pageCount, PAGE_SIZE)
-                .subscribeOn(Schedulers.io())
+            catsRepository.breeds(++pageCount, PAGE_SIZE)
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnTerminate { viewState.showLoading(false) }
                 .subscribe(

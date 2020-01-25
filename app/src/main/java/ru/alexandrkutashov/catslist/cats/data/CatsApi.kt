@@ -16,4 +16,9 @@ interface CatsApi {
         @Query("page") page: Int,
         @Query("limit") limit: Int
     ): Single<List<Cat>>
+
+    @GET("images/search")
+    fun photo(
+        @Query("breed_id") id: String
+    ): Single<List<CatImage>>
 }

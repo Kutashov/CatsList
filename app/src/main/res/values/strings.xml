@@ -4,4 +4,6 @@
     <string name="tab_text_2">Favorites</string>
 
     <string name="loading_label">Cats are coming!</string>
+    <string name="origination_description">from %1$s</string>
+    <string name="link_description">Learn more on %1$s</string>
 </resources>

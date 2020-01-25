@@ -2,8 +2,8 @@ package ru.alexandrkutashov.catslist.cats.di
 
 import dagger.Module
 import dagger.Provides
-import dagger.Reusable
 import retrofit2.Retrofit
+import ru.alexandrkutashov.catslist.cats.data.CatsRepository
 import ru.alexandrkutashov.catslist.cats.data.CatsApi
 
 /**
@@ -18,4 +18,8 @@ class CatsModule {
     fun provideCatsApi(retrofit: Retrofit): CatsApi {
         return retrofit.create(CatsApi::class.java)
     }
+
+    @CatsListScope
+    @Provides
+    fun provideCatsRepo(catsApi: CatsApi) = CatsRepository(catsApi)
 }
