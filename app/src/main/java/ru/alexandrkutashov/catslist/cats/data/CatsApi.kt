@@ -14,6 +14,6 @@ interface CatsApi {
     @GET("breeds")
     fun breeds(
         @Query("page") page: Int,
-        @Query("limit") limit: Int = 20
+        @Query("limit") limit: Int
     ): Single<List<Cat>>
 }
