@@ -1,4 +1,4 @@
-package ru.alexandrkutashov.catslist.core
+package ru.alexandrkutashov.catslist.core.ui
 
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager

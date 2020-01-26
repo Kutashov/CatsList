@@ -12,6 +12,7 @@ import ru.alexandrkutashov.catslist.cats.data.local.CatsDatabase
 import ru.alexandrkutashov.catslist.cats.data.local.FavoriteCat
 import ru.alexandrkutashov.catslist.cats.data.remote.Cat
 import ru.alexandrkutashov.catslist.cats.domain.CatsRepository
+import ru.alexandrkutashov.catslist.core.util.DownloadHelper
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -25,13 +26,14 @@ private const val PAGE_SIZE = 20
 @InjectViewState
 class CatsPresenter @Inject constructor(
     private val catsRepository: CatsRepository,
-    private val catsDb: CatsDatabase
+    private val catsDb: CatsDatabase,
+    private val downloadHelper: DownloadHelper
 ) : MvpPresenter<CatsView>() {
 
     private var pageCount = -1
     private val disposable = CompositeDisposable()
 
-    private val listUpateSubject = PublishSubject.create<List<Cat>>()
+    private val listUpdateSubject = PublishSubject.create<List<Cat>>()
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
@@ -43,7 +45,7 @@ class CatsPresenter @Inject constructor(
     private fun subscribeToUpdates() {
         disposable.add(
             Observable.combineLatest(
-                listUpateSubject.scan { oldList, newPage -> oldList + newPage },
+                listUpdateSubject.scan { oldList, newPage -> oldList + newPage },
                 catsDb.catsDao().getFavorites().subscribeOn(Schedulers.io()),
                 BiFunction<List<Cat>, List<FavoriteCat>, List<FavorableCat>> { catsList, favoriteList ->
                     catsList.map { cat ->
@@ -71,7 +73,7 @@ class CatsPresenter @Inject constructor(
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnTerminate { viewState.showLoading(false) }
                 .subscribe(
-                    { cats -> listUpateSubject.onNext(cats) },
+                    { cats -> listUpdateSubject.onNext(cats) },
                     { throwable -> Timber.d(throwable) }
                 )
         )
@@ -86,6 +88,14 @@ class CatsPresenter @Inject constructor(
                 .doOnError { throwable -> Timber.d(throwable) }
                 .subscribe()
         )
+    }
+
+    fun downloadImage(cat: FavorableCat) {
+        cat.imageUrl?.let {
+            if (!downloadHelper.download(it)) {
+                viewState.requestStoragePermission()
+            }
+        }
     }
 
     private fun FavorableCat.toFavorite() = FavoriteCat(id, name, origin, infoUrl, imageUrl)

@@ -6,7 +6,8 @@ import retrofit2.Retrofit
 import ru.alexandrkutashov.catslist.cats.all.CatsPresenter
 import ru.alexandrkutashov.catslist.cats.data.local.CatsDatabase
 import ru.alexandrkutashov.catslist.cats.favorites.FavoriteCatsPresenter
-import ru.alexandrkutashov.catslist.core.MainComponent
+import ru.alexandrkutashov.catslist.core.util.DownloadHelper
+import ru.alexandrkutashov.catslist.core.di.MainComponent
 import javax.inject.Scope
 
 /**
@@ -39,4 +40,5 @@ interface CatsDependencies {
 
     val retrofit: Retrofit
     val catsDatabase: CatsDatabase
+    val downloadHelper: DownloadHelper
 }

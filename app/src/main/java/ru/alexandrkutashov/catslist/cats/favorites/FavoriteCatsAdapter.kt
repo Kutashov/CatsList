@@ -66,5 +66,6 @@ class CatViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
     init {
         view.addFavBtn.isVisible = false
+        view.downloadImageBtn.isVisible = false
     }
 }

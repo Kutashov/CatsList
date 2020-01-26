@@ -1,9 +1,8 @@
-package ru.alexandrkutashov.catslist.core
+package ru.alexandrkutashov.catslist.core.di
 
 import android.content.Context
 import dagger.Component
 import ru.alexandrkutashov.catslist.cats.di.CatsDependencies
-import ru.alexandrkutashov.catslist.cats.di.CatsModule
 import javax.inject.Singleton
 
 /**
@@ -20,7 +19,11 @@ interface MainComponent : CatsDependencies {
     class Initializer private constructor() {
         companion object {
             fun init(context: Context): MainComponent = DaggerMainComponent.builder()
-                .applicationModule(ApplicationModule(context))
+                .applicationModule(
+                    ApplicationModule(
+                        context
+                    )
+                )
                 .build()
         }
     }

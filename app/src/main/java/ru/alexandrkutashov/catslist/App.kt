@@ -3,7 +3,7 @@ package ru.alexandrkutashov.catslist
 import android.app.Application
 import me.vponomarenko.injectionmanager.IHasComponent
 import me.vponomarenko.injectionmanager.x.XInjectionManager
-import ru.alexandrkutashov.catslist.core.MainComponent
+import ru.alexandrkutashov.catslist.core.di.MainComponent
 import timber.log.Timber
 import timber.log.Timber.DebugTree
 

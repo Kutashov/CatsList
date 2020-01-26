@@ -1,5 +1,6 @@
 package ru.alexandrkutashov.catslist.cats.all
 
+import android.Manifest
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,9 +14,9 @@ import me.vponomarenko.injectionmanager.x.XInjectionManager
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 import ru.alexandrkutashov.catslist.R
-import ru.alexandrkutashov.catslist.cats.data.remote.Cat
 import ru.alexandrkutashov.catslist.cats.di.CatsComponent
-import ru.alexandrkutashov.catslist.core.EndlessRecyclerViewScrollListener
+import ru.alexandrkutashov.catslist.core.ui.EndlessRecyclerViewScrollListener
+import ru.alexandrkutashov.catslist.core.util.PermissionHelper
 
 class CatsFragment : MvpAppCompatFragment(),
     CatsView, IHasComponent<CatsComponent> {
@@ -38,7 +39,11 @@ class CatsFragment : MvpAppCompatFragment(),
             }
         }
         catsRecycler.addOnScrollListener(scrollListener)
-        catsRecycler.adapter = CatsAdapter(requireContext()) { presenter.addFavorite(it) }
+        catsRecycler.adapter = CatsAdapter(
+            requireContext(),
+            { presenter.addFavorite(it) },
+            { presenter.downloadImage(it) }
+        )
     }
 
     override fun showCats(cats: List<FavorableCat>) {
@@ -50,6 +55,13 @@ class CatsFragment : MvpAppCompatFragment(),
             catsRecycler.isVisible = !isLoading
             loadingLabel.isVisible = isLoading
         }
+    }
+
+    override fun requestStoragePermission() {
+        PermissionHelper.requestPermission(
+            requireActivity(),
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+        )
     }
 
     companion object {

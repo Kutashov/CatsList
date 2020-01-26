@@ -1,4 +1,4 @@
-package ru.alexandrkutashov.catslist.core
+package ru.alexandrkutashov.catslist.core.di
 
 import dagger.Module
 import dagger.Provides

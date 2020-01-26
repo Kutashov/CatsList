@@ -19,7 +19,8 @@ import ru.alexandrkutashov.catslist.cats.data.Meow
  */
 class CatsAdapter(
     private val context: Context,
-    private val favoriteClickListener: (FavorableCat) -> Unit
+    private val favoriteClickListener: (FavorableCat) -> Unit,
+    private val downloadImageListener: (FavorableCat) -> Unit
 ) : RecyclerView.Adapter<CatViewHolder>() {
 
     private val catsList = mutableListOf<FavorableCat>()
@@ -49,6 +50,8 @@ class CatsAdapter(
 
             holder.addFavBtn.isVisible = !isFavorite
             holder.addFavBtn.setOnClickListener { favoriteClickListener(this) }
+
+            holder.downloadImageBtn.setOnClickListener { downloadImageListener(this) }
         }
     }
 
@@ -69,6 +72,7 @@ class CatViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     val image: ImageView = view.image
     val description: TextView = view.description
     val addFavBtn: ImageView = view.addFavBtn
+    val downloadImageBtn: ImageView = view.downloadImageBtn
 }
 
 data class FavorableCat(private val meow: Meow, val isFavorite: Boolean): Meow by meow

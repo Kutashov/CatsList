@@ -16,6 +16,18 @@
         tools:src="@drawable/ic_launcher_foreground" />
 
     <ImageView
+        android:id="@+id/downloadImageBtn"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="10dp"
+        android:tint="#FF0000"
+        android:src="@android:drawable/stat_sys_download_done"
+        app:layout_constraintBottom_toBottomOf="@+id/image"
+        app:layout_constraintStart_toStartOf="@+id/image" />
+
+    <ImageView
         android:id="@+id/addFavBtn"
         android:layout_width="48dp"
         android:layout_height="48dp"
