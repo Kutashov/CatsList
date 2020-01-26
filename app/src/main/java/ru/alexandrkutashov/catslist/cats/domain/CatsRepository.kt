@@ -9,9 +9,14 @@ import ru.alexandrkutashov.catslist.cats.data.remote.CatsApi
  * @author Alexandr Kutashov
  * on 26.01.2020
  */
-class CatsRepository(private val catsApi: CatsApi) {
 
-    fun breeds(page: Int, pageSize: Int): Single<List<Cat>> {
+interface CatsRepository {
+    fun breeds(page: Int, pageSize: Int): Single<List<Cat>>
+}
+
+class CatsRepositoryImpl(private val catsApi: CatsApi): CatsRepository {
+
+    override fun breeds(page: Int, pageSize: Int): Single<List<Cat>> {
         return catsApi.breeds(page, pageSize)
             .flatMap { list ->
                 Single.zip(

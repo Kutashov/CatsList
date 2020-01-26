@@ -5,6 +5,7 @@ import dagger.Provides
 import retrofit2.Retrofit
 import ru.alexandrkutashov.catslist.cats.data.remote.CatsApi
 import ru.alexandrkutashov.catslist.cats.domain.CatsRepository
+import ru.alexandrkutashov.catslist.cats.domain.CatsRepositoryImpl
 
 /**
  * @author Alexandr Kutashov
@@ -21,6 +22,5 @@ class CatsModule {
 
     @CatsListScope
     @Provides
-    fun provideCatsRepo(catsApi: CatsApi) =
-        CatsRepository(catsApi)
+    fun provideCatsRepo(catsApi: CatsApi): CatsRepository = CatsRepositoryImpl(catsApi)
 }

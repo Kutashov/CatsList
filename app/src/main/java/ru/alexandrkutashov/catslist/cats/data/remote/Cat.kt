@@ -12,8 +12,8 @@ data class Cat(
     override val name: String,
     override val origin: String,
     @SerializedName("wikipedia_url")
-    override val infoUrl: String?,
-    override val imageUrl: String?
+    override val infoUrl: String? = null,
+    override val imageUrl: String? = null
 ) : Meow
 
 data class CatImage(

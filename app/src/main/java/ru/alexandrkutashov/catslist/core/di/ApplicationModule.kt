@@ -7,6 +7,7 @@ import dagger.Provides
 import dagger.Reusable
 import ru.alexandrkutashov.catslist.cats.data.local.CatsDatabase
 import ru.alexandrkutashov.catslist.core.util.DownloadHelper
+import ru.alexandrkutashov.catslist.core.util.DownloadHelperImpl
 import javax.inject.Singleton
 
 /**
@@ -30,6 +31,5 @@ class ApplicationModule(private val context: Context) {
 
     @Reusable
     @Provides
-    fun downloadManager(context: Context) =
-        DownloadHelper(context)
+    fun downloadManager(context: Context): DownloadHelper = DownloadHelperImpl(context)
 }

@@ -15,7 +15,7 @@ data class FavoriteCat(
     val name: String,
     val origin: String,
     @ColumnInfo(name = "info_url")
-    val infoUrl: String?,
+    val infoUrl: String? = null,
     @ColumnInfo(name = "image_url")
-    val imageUrl: String?
+    val imageUrl: String? = null
 )
