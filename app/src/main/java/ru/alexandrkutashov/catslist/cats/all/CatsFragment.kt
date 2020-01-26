@@ -1,4 +1,4 @@
-package ru.alexandrkutashov.catslist.cats
+package ru.alexandrkutashov.catslist.cats.all
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,14 +13,14 @@ import me.vponomarenko.injectionmanager.x.XInjectionManager
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 import ru.alexandrkutashov.catslist.R
-import ru.alexandrkutashov.catslist.cats.data.Cat
+import ru.alexandrkutashov.catslist.cats.data.remote.Cat
 import ru.alexandrkutashov.catslist.cats.di.CatsComponent
 import ru.alexandrkutashov.catslist.core.EndlessRecyclerViewScrollListener
-import timber.log.Timber
 
-class CatsFragment : MvpAppCompatFragment(), CatsView, IHasComponent<CatsComponent> {
+class CatsFragment : MvpAppCompatFragment(),
+    CatsView, IHasComponent<CatsComponent> {
 
-    private val presenter by moxyPresenter { XInjectionManager.bindComponent(this).presenter }
+    private val presenter by moxyPresenter { XInjectionManager.bindComponent(this).catsPresenter }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,12 +38,11 @@ class CatsFragment : MvpAppCompatFragment(), CatsView, IHasComponent<CatsCompone
             }
         }
         catsRecycler.addOnScrollListener(scrollListener)
-        catsRecycler.adapter = CatsAdapter(requireContext())
+        catsRecycler.adapter = CatsAdapter(requireContext()) { presenter.addFavorite(it) }
     }
 
-    override fun showCats(cats: List<Cat>) {
-        Timber.d("showCats ${if (cats.isNotEmpty()) cats[0] else "empty"}")
-        (catsRecycler.adapter as CatsAdapter).addCats(cats)
+    override fun showCats(cats: List<FavorableCat>) {
+        (catsRecycler.adapter as CatsAdapter).setCats(cats)
     }
 
     override fun showLoading(isLoading: Boolean) {

@@ -42,6 +42,7 @@ def moxy = "2.0.2"
 def retrofit = "2.7.1"
 def dagger = "2.25.4"
 def glide = "4.11.0"
+def room = "2.2.3"
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -57,7 +58,7 @@ dependencies {
     kapt "com.github.moxy-community:moxy-compiler:$moxy"
     implementation "com.github.moxy-community:moxy-androidx:$moxy"
     implementation "com.github.bumptech.glide:glide:$glide"
-    annotationProcessor "com.github.bumptech.glide:compiler:$glide"
+    kapt "com.github.bumptech.glide:compiler:$glide"
 
     //network
     implementation 'com.jakewharton.timber:timber:4.7.1'
@@ -74,6 +75,11 @@ dependencies {
     kapt "com.google.dagger:dagger-compiler:$dagger"
     implementation "com.google.dagger:dagger-android-support:$dagger"
     implementation "com.github.valeryponomarenko.componentsmanager:androidx:2.1.0"
+
+    //storage
+    kapt "androidx.room:room-compiler:$room"
+    implementation "androidx.room:room-rxjava2:$room"
+    implementation "androidx.room:room-runtime:$room"
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.0'

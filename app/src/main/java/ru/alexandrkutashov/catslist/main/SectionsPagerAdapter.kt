@@ -5,7 +5,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import ru.alexandrkutashov.catslist.R
-import ru.alexandrkutashov.catslist.cats.CatsFragment
+import ru.alexandrkutashov.catslist.cats.all.CatsFragment
+import ru.alexandrkutashov.catslist.cats.favorites.FavoriteCatsFragment
 
 private val TAB_TITLES = arrayOf(
     R.string.tab_text_1,
@@ -18,6 +19,7 @@ class SectionsPagerAdapter(private val context: Context, fm: FragmentManager) :
     override fun getItem(position: Int): Fragment {
         return when (position) {
             0 -> CatsFragment.newInstance()
+            1 -> FavoriteCatsFragment.newInstance()
             else -> error("Unknown position in pager $position")
         }
     }
@@ -27,6 +29,6 @@ class SectionsPagerAdapter(private val context: Context, fm: FragmentManager) :
     }
 
     override fun getCount(): Int {
-        return 1
+        return 2
     }
 }

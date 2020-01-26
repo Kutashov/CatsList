@@ -1,5 +1,6 @@
 package ru.alexandrkutashov.catslist.core
 
+import android.content.Context
 import dagger.Component
 import ru.alexandrkutashov.catslist.cats.di.CatsDependencies
 import ru.alexandrkutashov.catslist.cats.di.CatsModule
@@ -18,7 +19,9 @@ interface MainComponent : CatsDependencies {
 
     class Initializer private constructor() {
         companion object {
-            fun init(): MainComponent = DaggerMainComponent.builder().build()
+            fun init(context: Context): MainComponent = DaggerMainComponent.builder()
+                .applicationModule(ApplicationModule(context))
+                .build()
         }
     }
 }

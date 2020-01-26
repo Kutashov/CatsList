@@ -1,4 +1,4 @@
-package ru.alexandrkutashov.catslist.cats
+package ru.alexandrkutashov.catslist.cats.all
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -6,19 +6,23 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.cat_list_item.view.*
 import ru.alexandrkutashov.catslist.R
-import ru.alexandrkutashov.catslist.cats.data.Cat
+import ru.alexandrkutashov.catslist.cats.data.Meow
 
 /**
  * @author Alexandr Kutashov
  * on 22.01.2020
  */
-class CatsAdapter(private val context: Context) : RecyclerView.Adapter<CatViewHolder>() {
+class CatsAdapter(
+    private val context: Context,
+    private val favoriteClickListener: (FavorableCat) -> Unit
+) : RecyclerView.Adapter<CatViewHolder>() {
 
-    private val catsList = mutableListOf<Cat>()
+    private val catsList = mutableListOf<FavorableCat>()
 
     override fun getItemCount() = catsList.size
 
@@ -42,6 +46,9 @@ class CatsAdapter(private val context: Context) : RecyclerView.Adapter<CatViewHo
             Glide.with(context).load(imageUrl).centerInside()
                 .placeholder(R.drawable.ic_launcher_background)
                 .into(holder.image)
+
+            holder.addFavBtn.isVisible = !isFavorite
+            holder.addFavBtn.setOnClickListener { favoriteClickListener(this) }
         }
     }
 
@@ -49,7 +56,8 @@ class CatsAdapter(private val context: Context) : RecyclerView.Adapter<CatViewHo
         Glide.with(context).clear(holder.image)
     }
 
-    fun addCats(cats: List<Cat>) {
+    fun setCats(cats: List<FavorableCat>) {
+        catsList.clear()
         catsList.addAll(cats)
         notifyDataSetChanged()
     }
@@ -60,4 +68,7 @@ class CatViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     val origin: TextView = view.origin
     val image: ImageView = view.image
     val description: TextView = view.description
+    val addFavBtn: ImageView = view.addFavBtn
 }
+
+data class FavorableCat(private val meow: Meow, val isFavorite: Boolean): Meow by meow

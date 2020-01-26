@@ -25,5 +25,5 @@ class App: Application(), IHasComponent<MainComponent> {
         XInjectionManager.bindComponent(this)
     }
 
-    override fun getComponent() = MainComponent.Initializer.init()
+    override fun getComponent() = MainComponent.Initializer.init(this)
 }
